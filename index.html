@@ -1,1 +1,377 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Confirmação de participação - Seleção Paulista FTMSP 2025</title>
+  <style>
+    :root{
+      --red:#900;
+      --black:#111;
+      --gray-bg:#f4f4f4;
+      --card:#fff;
+      --muted:#666;
+    }
+    *{box-sizing:border-box}
+    body {
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--gray-bg);
+      color: var(--black);
+    }
+    .topbar {
+      background: linear-gradient(90deg,#111 0%, var(--red) 100%);
+      color: #fff;
+      padding: 18px 16px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .logo {
+      width:64px;
+      height:64px;
+      flex: 0 0 64px;
+    }
+    .title-wrap { flex:1; text-align:left; }
+    h1 {
+      margin:0;
+      font-size:20px;
+      font-weight:700;
+      letter-spacing:0.2px;
+    }
+    .subtitle { font-size:13px; opacity:0.95; margin-top:4px; color: #fff; }
+
+    .container { max-width:980px; margin:20px auto; padding:0 12px; }
+
+    .orientacoes {
+      background: var(--card);
+      margin-bottom:14px;
+      padding:16px;
+      border-left:6px solid var(--red);
+      border-radius:8px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.06);
+      color:var(--black);
+      line-height:1.5;
+      font-size:15px;
+    }
+
+    .controls {
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    label.inline { font-size:13px; color:var(--muted); margin-right:6px; }
+    select, input[type=search] {
+      padding:8px;
+      border-radius:6px;
+      border:1px solid #dcdcdc;
+      background:#fff;
+      font-size:14px;
+    }
+
+    .card {
+      background:var(--card);
+      border-radius:8px;
+      padding:12px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    table { width:100%; border-collapse:collapse; margin-top:10px; }
+    th, td { padding:10px 12px; border-bottom:1px solid #f0f0f0; text-align:left; vertical-align:middle; }
+    th { background:#111; color:#fff; font-weight:700; font-size:13px; text-align:left; }
+    tr:nth-child(even) td { background:#fbfbfb; }
+    .actions { display:flex; gap:8px; justify-content:flex-end; }
+    button { padding:7px 10px; border-radius:6px; border:1px solid transparent; cursor:pointer; font-weight:600; font-size:14px; }
+    .btn-confirm { background:var(--red); color:#fff; border-color:var(--red); }
+    .btn-no { background:#fff; color:var(--red); border:1px solid var(--red); }
+    .btn-small { padding:6px 8px; font-size:13px; }
+
+    .empty { padding:20px; text-align:center; color:var(--muted); }
+
+    footer { text-align:center; color:var(--muted); font-size:13px; margin:28px 0; }
+
+    /* Modal */
+    #modal { display:none; position:fixed; inset:0; z-index:1200; align-items:center; justify-content:center; }
+    .modal-backdrop { position:absolute; inset:0; background:rgba(0,0,0,0.55); }
+    .modal-card {
+      position:relative;
+      background:var(--card);
+      width:100%;
+      max-width:420px;
+      border-radius:8px;
+      padding:16px;
+      box-shadow:0 10px 40px rgba(0,0,0,0.25);
+      z-index:2;
+    }
+    .modal h3 { margin:0 0 10px 0; color:var(--red); font-size:18px; }
+    .modal label { display:block; margin-top:10px; font-size:13px; color:var(--muted); }
+    .modal input[type=email], .modal select { width:100%; padding:8px; border-radius:6px; border:1px solid #ddd; margin-top:6px; font-size:14px; }
+    .modal .actions { margin-top:14px; display:flex; gap:8px; justify-content:flex-end; }
+    .note { font-size:13px; color:var(--muted); margin-top:8px; }
+
+    /* toast */
+    .toast {
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      background:#222;
+      color:#fff;
+      padding:10px 14px;
+      border-radius:8px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.25);
+      display:none;
+      z-index:2000;
+    }
+
+    @media (max-width:560px){
+      .controls { flex-direction:column; align-items:stretch; }
+      .logo { display:none; }
+      .title-wrap { text-align:center; }
+      h1{font-size:18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <img src="logo FTMSP.png" alt="FTMSP" class="logo" />
+    <div class="title-wrap">
+      <h1>Confirmação de participação - Seleção Paulista FTMSP 2025</h1>
+      <div class="subtitle">Confirmação de atletas para o Brasileirão de Verão Interclubes Olímpico e Paralímpico – 2025</div>
+    </div>
+  </div>
+
+  <main class="container">
+    <section class="orientacoes">
+      <p><strong>A FEDERAÇÃO DE TÊNIS DE MESA DO ESTADO DE SÃO PAULO (FTMSP)</strong> convoca os atletas abaixo para compor a <strong>Seleção Estadual</strong> no <strong>Brasileirão de Verão Interclubes Olímpico e Paralímpico – 2025</strong>, a ser disputado em dezembro na cidade de <strong>Blumenau - SC</strong>.</p>
+      <p>Os dirigentes responsáveis pelos atletas deverão apontar no link abaixo se o atleta participará ou não do Brasileirão e informar o <strong>tamanho da camiseta</strong> a ser utilizada. Ao enviar, a resposta será registrada no sistema de respostas do formulário.</p>
+      <p class="note"><strong>Importante:</strong> se o Google Forms estiver configurado para <em>Coletar endereços de e-mail</em> e <em>Enviar cópia das respostas</em>, o técnico receberá automaticamente a confirmação por e-mail.</p>
+    </section>
+
+    <section class="card">
+      <div class="controls" style="margin-bottom:12px;">
+        <div>
+          <label class="inline" for="teamSelect">Equipe:</label>
+          <select id="teamSelect"><option value="">-- Selecione uma equipe --</option></select>
+        </div>
+
+        <div>
+          <label class="inline" for="search">Pesquisar atleta:</label>
+          <input id="search" type="search" placeholder="Nome do atleta..." />
+        </div>
+
+        <div style="margin-left:auto; display:flex; align-items:center; gap:8px;">
+          <button id="reset-hidden" class="btn-small" style="background:transparent;border:1px solid #ddd;color:var(--muted);">Restaurar lista</button>
+        </div>
+      </div>
+
+      <div id="tableWrap"></div>
+    </section>
+
+    <footer>
+      <div>FTMSP © 2025 — Confirmação de participação.</div>
+    </footer>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <h3 id="modalTitle">Confirmar presença</h3>
+      <div id="modalBody">
+        <label>Atleta</label>
+        <div id="modalAtleta" style="font-weight:700;"></div>
+
+        <div id="sizeSelectWrap">
+          <label for="sizeSelect">Tamanho da camiseta</label>
+          <select id="sizeSelect">
+            <option value="">-- selecione --</option>
+            <option>XS</option><option>S</option><option>M</option>
+            <option>L</option><option>XL</option><option>XXL</option><option>Outro</option>
+          </select>
+        </div>
+
+        <label for="emailInput">E-mail para cópia</label>
+        <input id="emailInput" type="email" placeholder="seuemail@exemplo.com" />
+
+        <p class="note">📩 Caso o Google Forms esteja configurado para <strong>Coletar endereços de e-mail</strong>, o técnico receberá automaticamente uma cópia da resposta.</p>
+
+        <div class="actions">
+          <button id="cancelModal" class="btn-small" style="background:#f3f3f3;border:1px solid #ddd;">Cancelar</button>
+          <button id="submitModal" class="btn-confirm">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Confirmação enviada!</div>
+
+  <!-- Hidden Google Form (envio via iframe para evitar CORS) -->
+  <iframe name="hidden_iframe" style="display:none"></iframe>
+  <form id="gfForm" action="https://docs.google.com/forms/d/e/1FAIpQLSc_bpi9f5ac2A82dQP8ozkiDwRKwITrGjNkabCY1r85_W1pcw/formResponse" method="POST" target="hidden_iframe" style="display:none">
+    <input name="entry.104731776" id="gf_name" />
+    <input name="entry.1001428990" id="gf_team" />
+    <input name="entry.959878233" id="gf_participa" />
+    <input name="entry.1613628747" id="gf_size" />
+    <input name="entry.138307613" id="gf_email" />
+  </form>
+
+  <!-- PapaParse para leitura de CSV -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script>
+    const CSV_FILE = 'ConfirmaSelecaoPta.csv';
+    const teamSelect = document.getElementById('teamSelect');
+    const tableWrap = document.getElementById('tableWrap');
+    const searchInput = document.getElementById('search');
+    const modal = document.getElementById('modal');
+    const modalAtleta = document.getElementById('modalAtleta');
+    const modalTitle = document.getElementById('modalTitle');
+    const sizeWrap = document.getElementById('sizeSelectWrap');
+    const sizeSelect = document.getElementById('sizeSelect');
+    const emailInput = document.getElementById('emailInput');
+    const toast = document.getElementById('toast');
+
+    let athletes = [];
+    let hiddenSet = new Set(JSON.parse(localStorage.getItem('confirmedHidden')||'[]'));
+    let current = null;
+
+    async function loadCsv(){
+      try {
+        const res = await fetch(CSV_FILE);
+        if(!res.ok) throw new Error('CSV não encontrado');
+        const text = await res.text();
+        const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
+        athletes = parsed.data.map(r => {
+          const keys = Object.keys(r);
+          const nameKey = keys.find(k=>k.toLowerCase().includes('nome')) || keys[0];
+          const teamKey = keys.find(k=>k.toLowerCase().includes('equipe')||k.toLowerCase().includes('team')) || keys[1] || keys[0];
+          return { Nome: (r[nameKey]||'').trim(), Equipe: (r[teamKey]||'').trim() };
+        }).filter(a=>a.Nome);
+        buildTeamOptions();
+        renderTable();
+      } catch (err) {
+        tableWrap.innerHTML = '<div class="empty">Não foi possível carregar o arquivo <b>ConfirmaSelecaoPta.csv</b>. Verifique se está na mesma pasta que o index.html.</div>';
+        console.error(err);
+      }
+    }
+
+    function buildTeamOptions(){
+      const teams = Array.from(new Set(athletes.map(a=>a.Equipe).filter(Boolean))).sort();
+      teamSelect.innerHTML = '<option value="">-- Selecione uma equipe --</option>';
+      teams.forEach(t=>{
+        const opt = document.createElement('option'); opt.value = t; opt.textContent = t;
+        teamSelect.appendChild(opt);
+      });
+    }
+
+    function renderTable(){
+      const team = teamSelect.value;
+      const q = searchInput.value.trim().toLowerCase();
+      const filtered = athletes.filter(a=>{
+        if(team && a.Equipe !== team) return false;
+        if(q && !a.Nome.toLowerCase().includes(q)) return false;
+        if(hiddenSet.has(a.Nome+'||'+a.Equipe)) return false;
+        return true;
+      });
+
+      if(filtered.length === 0){
+        tableWrap.innerHTML = '<div class="empty">Nenhum atleta disponível.</div>';
+        return;
+      }
+
+      let html = '<table><thead><tr><th>Nome</th><th>Equipe</th><th style="width:220px">Ação</th></tr></thead><tbody>';
+      filtered.forEach(a=>{
+        html += `<tr data-name="${escapeHtml(a.Nome)}" data-team="${escapeHtml(a.Equipe)}">
+          <td>${escapeHtml(a.Nome)}</td>
+          <td>${escapeHtml(a.Equipe)}</td>
+          <td class="actions">
+            <button class="btn-confirm action-confirm">Confirmar</button>
+            <button class="btn-no action-no">Não participar</button>
+          </td>
+        </tr>`;
+      });
+      html += '</tbody></table>';
+      tableWrap.innerHTML = html;
+
+      document.querySelectorAll('.action-confirm').forEach(btn => btn.addEventListener('click', (e) => {
+        const tr = e.target.closest('tr'); openModal(tr, true);
+      }));
+      document.querySelectorAll('.action-no').forEach(btn => btn.addEventListener('click', (e) => {
+        const tr = e.target.closest('tr'); openModal(tr, false);
+      }));
+    }
+
+    function openModal(tr, isYes){
+      const name = tr.dataset.name, team = tr.dataset.team;
+      current = { name, team, resp: isYes ? 'Sim' : 'Não' };
+      modalAtleta.textContent = `${name} — ${team}`;
+      modalTitle.textContent = isYes ? 'Confirmar presença' : 'Marcar como NÃO participante';
+      sizeWrap.style.display = isYes ? 'block' : 'none';
+      sizeSelect.value = '';
+      emailInput.value = '';
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden','false');
+    }
+
+    document.getElementById('cancelModal').addEventListener('click', () => {
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden','true');
+    });
+
+    document.getElementById('submitModal').addEventListener('click', () => {
+      if(!current) return;
+      if(current.resp === 'Sim' && !sizeSelect.value){
+        alert('Por favor selecione o tamanho da camiseta.');
+        return;
+      }
+      // preencher form oculto e enviar para Google Forms
+      document.getElementById('gf_name').value = current.name;
+      document.getElementById('gf_team').value = current.team;
+      document.getElementById('gf_participa').value = current.resp;
+      document.getElementById('gf_size').value = sizeSelect.value;
+      document.getElementById('gf_email').value = emailInput.value;
+
+      document.getElementById('gfForm').submit();
+
+      // esconder atleta localmente
+      hiddenSet.add(current.name + '||' + current.team);
+      localStorage.setItem('confirmedHidden', JSON.stringify(Array.from(hiddenSet)));
+
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden','true');
+
+      showToast('Confirmação enviada!');
+      renderTable();
+    });
+
+    function showToast(msg, time = 3000){
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      setTimeout(()=> {
+        toast.style.display = 'none';
+      }, time);
+    }
+
+    function escapeHtml(s){
+      return (s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+    }
+
+    teamSelect.addEventListener('change', renderTable);
+    searchInput.addEventListener('input', renderTable);
+
+    document.getElementById('reset-hidden').addEventListener('click', ()=>{
+      if(confirm('Apagar confirmações locais e restaurar lista?')){
+        hiddenSet = new Set();
+        localStorage.removeItem('confirmedHidden');
+        renderTable();
+      }
+    });
+
+    // inicializa
+    loadCsv();
+  </script>
+</body>
+</html>
 
