@@ -3,39 +3,103 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Confirmação de Participação - Seleção</title>
+  <title>Confirmação de Participação - Seleção Paulista</title>
   <style>
-    :root{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,'Helvetica Neue',Arial;}
-    body{margin:0;background:#f7f7fb;color:#111;padding:24px}
-    .container{max-width:980px;margin:0 auto;background:white;padding:20px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.06)}
-    h1{margin:0 0 12px;font-size:20px}
-    p.lead{margin:0 0 18px;color:#444}
-    .row{display:flex;gap:12px;align-items:center;margin-bottom:12px}
-    select,button,input[type=email],input[type=text]{padding:8px;border-radius:8px;border:1px solid #ddd}
-    button{cursor:pointer}
-    .teams{margin:16px 0}
-    .list{margin-top:12px}
-    .athlete{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:8px;border:1px solid #eee;margin-bottom:8px}
-    .athlete .meta{display:flex;gap:12px;align-items:center}
-    .badgespan{font-size:12px;padding:6px 8px;border-radius:999px;border:1px solid #ddd;background:#fafafa}
-    .actions{display:flex;gap:8px}
-    .btn-green{background:#28a745;color:white;padding:8px 12px;border-radius:8px;border:0}
-    .btn-red{background:#dc3545;color:white;padding:8px 12px;border-radius:8px;border:0}
-    .btn-ghost{background:transparent;border:1px solid #ddd;padding:8px 12px;border-radius:8px}
-    #modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.45)}
-    .modal-card{background:white;padding:16px;border-radius:10px;min-width:320px;max-width:420px}
-    label{display:block;margin-top:8px;font-size:13px}
-    .small{font-size:13px;color:#666}
-    footer{margin-top:18px;font-size:13px;color:#666}
+    :root {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, 'Helvetica Neue', Arial;
+    }
+    body {
+      margin: 0;
+      background: #f7f7fb;
+      color: #111;
+      padding: 24px;
+    }
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,.06);
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 20px;
+    }
+    p.lead {
+      margin: 0 0 18px;
+      color: #444;
+    }
+    .row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    select,button,input[type=email] {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+    button { cursor: pointer; }
+    .list { margin-top: 12px; }
+    .athlete {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #eee;
+      margin-bottom: 8px;
+    }
+    .actions { display: flex; gap: 8px; }
+    .btn-green {
+      background: #28a745;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 0;
+    }
+    .btn-red {
+      background: #dc3545;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 0;
+    }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+      border-radius: 8px;
+    }
+    #modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,.45);
+    }
+    .modal-card {
+      background: white;
+      padding: 16px;
+      border-radius: 10px;
+      min-width: 320px;
+      max-width: 420px;
+    }
+    label { display: block; margin-top: 8px; font-size: 13px; }
+    .small { font-size: 13px; color: #666; }
+    footer { margin-top: 18px; font-size: 13px; color: #666; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Confirmação de Participação</h1>
-    <p class="lead">Carregue o arquivo CSV com os atletas, selecione a equipe e confirme ou não a participação. As respostas serão enviadas automaticamente para o Google Forms.</p>
+    <p class="lead">Selecione sua equipe e confirme a participação dos atletas. As respostas são enviadas automaticamente ao Google Forms.</p>
 
     <div class="row">
-      <input id="file" type="file" accept=".csv" />
       <label for="teamSelect">Equipe:</label>
       <select id="teamSelect"><option value="">-- selecione --</option></select>
       <div class="small" id="remainingCount"></div>
@@ -44,14 +108,14 @@
     <div id="list" class="list"></div>
 
     <footer>
-      <div class="small">As confirmações são salvas localmente e também enviadas automaticamente para o Google Forms vinculado à Federação.</div>
+      <div class="small">As confirmações são enviadas automaticamente para o formulário oficial da Federação.</div>
     </footer>
   </div>
 
   <!-- Modal -->
   <div id="modal">
     <div class="modal-card">
-      <h3 id="modalTitle">Confirmar participação</h3>
+      <h3 id="modalTitle">Confirmação de participação</h3>
       <div class="small">Atleta: <span id="modalAtleta"></span></div>
       <label for="sizeSelect">Tamanho da camiseta</label>
       <select id="sizeSelect"></select>
@@ -65,95 +129,101 @@
   </div>
 
   <script>
-    const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdkwQH9Fh6KeFF86jnUZgJcmvxuAuzbUAEe5sDu3tMqu8LioQ/formResponse';
-
+    const CSV_URL = "ConfirmaSelecaoPta.csv";
+    const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdkwQH9Fh6KeFF86jnUZgJcmvxuAuzbUAEe5sDu3tMqu8LioQ/formResponse";
     const ENTRY = {
-      nome: 'entry.1522913150',
-      equipe: 'entry.671344410',
-      confirma: 'entry.1007203116',
-      tamanho: 'entry.1103043680',
-      email: 'entry.296785711'
+      nome: "entry.1522913150",
+      equipe: "entry.671344410",
+      confirma: "entry.1007203116",
+      tamanho: "entry.1103043680",
+      email: "entry.296785711"
     };
+    const TAMANHOS = ["PP","P","M","G","GG","XG","XGG","XGGG","Infantil 01","Infantil 02","Infantil 04","Infantil 06","Infantil 08","Infantil 10","Infantil 12","Infantil 14","Infantil 16"];
 
-    const TAMANHOS = ['PP','P','M','G','GG','XG','XGG','XGGG','Infantil 01','Infantil 02','Infantil 04','Infantil 06','Infantil 08','Infantil 10','Infantil 12','Infantil 14','Infantil 16'];
-
-    function parseCSV(text){
-      const lines=text.trim().split(/\r?\n/);
-      const headers=lines.shift().split(',');
-      return lines.map(l=>{
-        const cells=l.split(',');
-        const obj={};
-        headers.forEach((h,i)=>obj[h.trim()]=cells[i]?cells[i].trim():'');
+    function parseCSV(text) {
+      const lines = text.trim().split(/\r?\n/);
+      const headers = lines.shift().split(',');
+      return lines.map(line => {
+        const cells = line.split(',');
+        const obj = {};
+        headers.forEach((h,i)=> obj[h.trim()] = cells[i]?.trim() || '');
         return obj;
       });
     }
 
-    const file=document.getElementById('file');
-    const teamSelect=document.getElementById('teamSelect');
-    const list=document.getElementById('list');
-    const modal=document.getElementById('modal');
-    const modalAtleta=document.getElementById('modalAtleta');
-    const sizeSelect=document.getElementById('sizeSelect');
-    const coachEmail=document.getElementById('coachEmail');
-    const btnCancel=document.getElementById('btnCancel');
-    const btnConfirm=document.getElementById('btnConfirm');
-    const remainingCount=document.getElementById('remainingCount');
+    const teamSelect = document.getElementById('teamSelect');
+    const list = document.getElementById('list');
+    const modal = document.getElementById('modal');
+    const modalAtleta = document.getElementById('modalAtleta');
+    const sizeSelect = document.getElementById('sizeSelect');
+    const coachEmail = document.getElementById('coachEmail');
+    const btnCancel = document.getElementById('btnCancel');
+    const btnConfirm = document.getElementById('btnConfirm');
+    const remainingCount = document.getElementById('remainingCount');
 
-    TAMANHOS.forEach(t=>{
-      const o=document.createElement('option');o.value=t;o.textContent=t;sizeSelect.appendChild(o);
+    TAMANHOS.forEach(t => {
+      const o = document.createElement('option');
+      o.value = t; o.textContent = t;
+      sizeSelect.appendChild(o);
     });
 
-    let allRows=[];
-    let currentRow=null;
+    let allRows = [];
+    let currentRow = null;
 
-    file.addEventListener('change',e=>{
-      const f=e.target.files[0];if(!f)return;
-      const r=new FileReader();
-      r.onload=()=>{
-        allRows=parseCSV(r.result);
-        const equipes=[...new Set(allRows.map(a=>a.Equipe))].sort();
-        teamSelect.innerHTML='<option value="">-- selecione --</option>'+equipes.map(eq=>`<option>${eq}</option>`).join('');
-        remainingCount.textContent=`${allRows.length} atletas carregados.`;
-      };
-      r.readAsText(f);
-    });
+    fetch(CSV_URL)
+      .then(r => r.text())
+      .then(text => {
+        allRows = parseCSV(text);
+        const equipes = [...new Set(allRows.map(a => a.Equipe))].sort();
+        teamSelect.innerHTML = '<option value="">-- selecione --</option>' + equipes.map(eq => `<option>${eq}</option>`).join('');
+        remainingCount.textContent = `${allRows.length} atletas carregados.`;
+      });
 
-    teamSelect.addEventListener('change',()=>{
-      const equipe=teamSelect.value;
-      list.innerHTML='';
-      allRows.filter(a=>a.Equipe===equipe).forEach(a=>{
-        const div=document.createElement('div');div.className='athlete';
-        div.innerHTML=`<div class="meta"><strong>${a.Nome}</strong></div><div class="actions"><button class="btn-green">Confirma</button><button class="btn-red">Não participa</button></div>`;
-        div.querySelector('.btn-green').onclick=()=>openModal(a,true);
-        div.querySelector('.btn-red').onclick=()=>openModal(a,false);
+    teamSelect.addEventListener('change', () => {
+      const equipe = teamSelect.value;
+      list.innerHTML = '';
+      allRows.filter(a => a.Equipe === equipe).forEach(a => {
+        const div = document.createElement('div');
+        div.className = 'athlete';
+        div.innerHTML = `
+          <div class="meta"><strong>${a.Nome}</strong><span class="small">${a["Categoria/Classe"]}</span></div>
+          <div class="actions">
+            <button class="btn-green">Confirma</button>
+            <button class="btn-red">Não participa</button>
+          </div>`;
+        div.querySelector('.btn-green').onclick = () => openModal(a, true);
+        div.querySelector('.btn-red').onclick = () => openModal(a, false);
         list.appendChild(div);
       });
     });
 
-    function openModal(row,participa){
-      currentRow=row;modalAtleta.textContent=row.Nome;modal.dataset.participa=participa?'Sim':'Não';modal.style.display='flex';
+    function openModal(row, participa) {
+      currentRow = row;
+      modalAtleta.textContent = row.Nome;
+      modal.dataset.participa = participa ? 'Sim' : 'Não';
+      modal.style.display = 'flex';
     }
 
-    btnCancel.onclick=()=>modal.style.display='none';
+    btnCancel.onclick = () => modal.style.display = 'none';
 
-    btnConfirm.onclick=()=>{
-      if(!currentRow)return;
-      const data=new FormData();
-      data.append(ENTRY.nome,currentRow.Nome);
-      data.append(ENTRY.equipe,currentRow.Equipe);
-      data.append(ENTRY.confirma,modal.dataset.participa);
-      data.append(ENTRY.tamanho,sizeSelect.value);
-      data.append(ENTRY.email,coachEmail.value);
+    btnConfirm.onclick = () => {
+      if (!currentRow) return;
+      const data = new FormData();
+      data.append(ENTRY.nome, currentRow.Nome);
+      data.append(ENTRY.equipe, currentRow.Equipe);
+      data.append(ENTRY.confirma, modal.dataset.participa);
+      data.append(ENTRY.tamanho, sizeSelect.value);
+      data.append(ENTRY.email, coachEmail.value);
 
-      fetch(FORM_URL,{method:'POST',body:data,mode:'no-cors'})
-        .then(()=>{
-          allRows=allRows.filter(r=>r!==currentRow);
+      fetch(FORM_URL, { method: 'POST', body: data, mode: 'no-cors' })
+        .then(() => {
+          allRows = allRows.filter(r => r !== currentRow);
           teamSelect.dispatchEvent(new Event('change'));
-          remainingCount.textContent=`${allRows.length} atletas restantes.`;
-          modal.style.display='none';
+          remainingCount.textContent = `${allRows.length} atletas restantes.`;
+          modal.style.display = 'none';
           alert('Confirmação enviada com sucesso!');
         })
-        .catch(()=>alert('Erro ao enviar para o Google Forms.'));
+        .catch(() => alert('Erro ao enviar para o Google Forms.'));
     };
   </script>
 </body>
