@@ -6,123 +6,36 @@
   <title>Confirmação de participação - Seleção Paulista FTMSP 2025</title>
   <style>
     :root{
-      --red:#900;
-      --black:#111;
-      --gray-bg:#f4f4f4;
-      --card:#fff;
-      --muted:#666;
+      --red:#900;--black:#111;--gray-bg:#f4f4f4;--card:#fff;--muted:#666;
     }
-    *{box-sizing:border-box}
-    body {
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
-      margin: 0;
-      background: var(--gray-bg);
-      color: var(--black);
-    }
-    .topbar {
-      background: linear-gradient(90deg,#111 0%, var(--red) 100%);
-      color: #fff;
-      padding: 18px 16px;
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-    .logo { width:64px; height:64px; flex: 0 0 64px; }
-    .title-wrap { flex:1; text-align:left; }
-    h1 { margin:0; font-size:20px; font-weight:700; }
-    .subtitle { font-size:13px; opacity:0.95; margin-top:4px; color: #fff; }
-
-    .container { max-width:980px; margin:20px auto; padding:0 12px; }
-
-    .orientacoes {
-      background: var(--card);
-      margin-bottom:14px;
-      padding:16px;
-      border-left:6px solid var(--red);
-      border-radius:8px;
-      box-shadow:0 2px 10px rgba(0,0,0,0.06);
-      color:var(--black);
-      line-height:1.5;
-      font-size:15px;
-    }
-
-    .controls {
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-      margin-bottom:12px;
-    }
-    label.inline { font-size:13px; color:var(--muted); margin-right:6px; }
-    select, input[type=search] {
-      padding:8px;
-      border-radius:6px;
-      border:1px solid #dcdcdc;
-      background:#fff;
-      font-size:14px;
-    }
-
-    .card {
-      background:var(--card);
-      border-radius:8px;
-      padding:12px;
-      box-shadow:0 2px 10px rgba(0,0,0,0.06);
-    }
-
-    table { width:100%; border-collapse:collapse; margin-top:10px; }
-    th, td { padding:10px 12px; border-bottom:1px solid #f0f0f0; text-align:left; vertical-align:middle; }
-    th { background:#111; color:#fff; font-weight:700; font-size:13px; }
-    tr:nth-child(even) td { background:#fbfbfb; }
-    .actions { display:flex; gap:8px; justify-content:flex-end; }
-    button { padding:7px 10px; border-radius:6px; border:1px solid transparent; cursor:pointer; font-weight:600; font-size:14px; }
-    .btn-confirm { background:var(--red); color:#fff; border-color:var(--red); }
-    .btn-no { background:#fff; color:var(--red); border:1px solid var(--red); }
-    .btn-confirm:hover{background:#b00;}
-    .btn-no:hover{background:#f8f8f8;}
-
-    .empty { padding:20px; text-align:center; color:var(--muted); }
-
-    footer { text-align:center; color:var(--muted); font-size:13px; margin:28px 0; }
-
-    /* Modal */
-    #modal { display:none; position:fixed; inset:0; z-index:1200; align-items:center; justify-content:center; }
-    .modal-backdrop { position:absolute; inset:0; background:rgba(0,0,0,0.55); }
-    .modal-card {
-      position:relative;
-      background:var(--card);
-      width:100%;
-      max-width:420px;
-      border-radius:8px;
-      padding:16px;
-      box-shadow:0 10px 40px rgba(0,0,0,0.25);
-      z-index:2;
-    }
-    .modal h3 { margin:0 0 10px 0; color:var(--red); font-size:18px; }
-    .modal label { display:block; margin-top:10px; font-size:13px; color:var(--muted); }
-    .modal input[type=email], .modal select { width:100%; padding:8px; border-radius:6px; border:1px solid #ddd; margin-top:6px; font-size:14px; }
-    .modal .actions { margin-top:14px; display:flex; gap:8px; justify-content:flex-end; }
-    .note { font-size:13px; color:var(--muted); margin-top:8px; }
-
-    /* toast */
-    .toast {
-      position:fixed;
-      right:18px;
-      bottom:18px;
-      background:#222;
-      color:#fff;
-      padding:10px 14px;
-      border-radius:8px;
-      box-shadow:0 6px 20px rgba(0,0,0,0.25);
-      display:none;
-      z-index:2000;
-    }
-
-    @media (max-width:560px){
-      .controls { flex-direction:column; align-items:stretch; }
-      .logo { display:none; }
-      .title-wrap { text-align:center; }
-      h1{font-size:18px}
-    }
+    body{font-family:"Segoe UI",Roboto,Arial,sans-serif;margin:0;background:var(--gray-bg);color:var(--black);}
+    .topbar{background:linear-gradient(90deg,#111 0%,var(--red) 100%);color:#fff;padding:18px 16px;display:flex;align-items:center;gap:12px;}
+    .logo{width:64px;height:64px;flex:0 0 64px;}
+    .title-wrap{flex:1;}
+    h1{margin:0;font-size:20px;font-weight:700;}
+    .subtitle{font-size:13px;opacity:0.95;margin-top:4px;}
+    .container{max-width:980px;margin:20px auto;padding:0 12px;}
+    .orientacoes{background:var(--card);margin-bottom:14px;padding:16px;border-left:6px solid var(--red);border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,0.06);line-height:1.5;font-size:15px;}
+    .card{background:var(--card);border-radius:8px;padding:12px;box-shadow:0 2px 10px rgba(0,0,0,0.06);}
+    select,input[type=search]{padding:8px;border-radius:6px;border:1px solid #dcdcdc;font-size:14px;}
+    table{width:100%;border-collapse:collapse;margin-top:10px;}
+    th,td{padding:10px 12px;border-bottom:1px solid #f0f0f0;text-align:left;}
+    th{background:#111;color:#fff;font-weight:700;font-size:13px;}
+    tr:nth-child(even) td{background:#fbfbfb;}
+    .actions{display:flex;gap:8px;justify-content:flex-end;}
+    button{padding:7px 10px;border-radius:6px;border:1px solid transparent;cursor:pointer;font-weight:600;font-size:14px;}
+    .btn-confirm{background:var(--red);color:#fff;border-color:var(--red);}
+    .btn-no{background:#fff;color:var(--red);border:1px solid var(--red);}
+    .empty{padding:20px;text-align:center;color:var(--muted);}
+    footer{text-align:center;color:var(--muted);font-size:13px;margin:28px 0;}
+    #modal{display:none;position:fixed;inset:0;z-index:1200;align-items:center;justify-content:center;}
+    .modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.55);}
+    .modal-card{position:relative;background:var(--card);width:100%;max-width:420px;border-radius:8px;padding:16px;box-shadow:0 10px 40px rgba(0,0,0,0.25);}
+    .modal h3{margin:0 0 10px 0;color:var(--red);font-size:18px;}
+    .modal label{display:block;margin-top:10px;font-size:13px;color:var(--muted);}
+    .modal input[type=email],.modal select{width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;font-size:14px;}
+    .modal .actions{margin-top:14px;display:flex;gap:8px;justify-content:flex-end;}
+    .toast{position:fixed;right:18px;bottom:18px;background:#222;color:#fff;padding:10px 14px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.25);display:none;z-index:2000;}
   </style>
 </head>
 <body>
@@ -137,34 +50,26 @@
   <main class="container">
     <section class="orientacoes">
       <p><strong>A FEDERAÇÃO DE TÊNIS DE MESA DO ESTADO DE SÃO PAULO (FTMSP)</strong> convoca os atletas abaixo para compor a <strong>Seleção Estadual</strong> no <strong>Brasileirão de Verão Interclubes Olímpico e Paralímpico – 2025</strong>, a ser disputado em dezembro na cidade de <strong>Blumenau - SC</strong>.</p>
-      <p>Os dirigentes responsáveis pelos atletas deverão apontar no link abaixo se o atleta participará ou não do Brasileirão e informar o <strong>tamanho da camiseta</strong> a ser utilizada. Ao enviar, a resposta será registrada no sistema de respostas do formulário.</p>
+      <p>Os dirigentes responsáveis pelos atletas deverão confirmar, no link abaixo, se o atleta participará ou não do Brasileirão e informar o <strong>tamanho da camiseta</strong> a ser utilizada. Ao enviar, a resposta será registrada automaticamente no sistema.</p>
     </section>
 
     <section class="card">
       <div class="controls">
-        <div>
-          <label class="inline" for="teamSelect">Equipe:</label>
-          <select id="teamSelect"><option value="">-- Selecione uma equipe --</option></select>
-        </div>
-
-        <div>
-          <label class="inline" for="search">Pesquisar atleta:</label>
-          <input id="search" type="search" placeholder="Nome do atleta..." />
-        </div>
+        <label>Equipe:</label>
+        <select id="teamSelect"><option value="">-- Selecione uma equipe --</option></select>
+        <label>Pesquisar atleta:</label>
+        <input id="search" type="search" placeholder="Nome do atleta..." />
       </div>
 
       <div id="tableWrap" class="empty">Selecione uma equipe para ver os atletas convocados.</div>
     </section>
 
-    <footer>
-      <div>FTMSP © 2025 — Confirmação de participação.</div>
-    </footer>
+    <footer>FTMSP © 2025 — Confirmação de participação.</footer>
   </main>
 
-  <!-- Modal -->
-  <div id="modal" aria-hidden="true">
+  <div id="modal">
     <div class="modal-backdrop"></div>
-    <div class="modal-card" role="dialog" aria-modal="true">
+    <div class="modal-card">
       <h3 id="modalTitle">Confirmar presença</h3>
       <div id="modalBody">
         <label>Atleta</label>
@@ -183,7 +88,7 @@
         <input id="emailInput" type="email" placeholder="seuemail@exemplo.com" />
 
         <div class="actions">
-          <button id="cancelModal" style="background:#f3f3f3;border:1px solid #ddd;">Cancelar</button>
+          <button id="cancelModal">Cancelar</button>
           <button id="submitModal" class="btn-confirm">Enviar</button>
         </div>
       </div>
@@ -192,7 +97,6 @@
 
   <div class="toast" id="toast">Confirmação enviada!</div>
 
-  <!-- Hidden Google Form -->
   <iframe name="hidden_iframe" style="display:none"></iframe>
   <form id="gfForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdkwQH9Fh6KeFF86jnUZgJcmvxuAuzbUAEe5sDu3tMqu8LioQ/formResponse" method="POST" target="hidden_iframe" style="display:none">
     <input name="entry.1522913150" id="gf_name" />
@@ -204,63 +108,60 @@
 
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <script>
-    const CSV_FILE = 'ConfirmaSelecaoPta.csv';
-    const teamSelect = document.getElementById('teamSelect');
-    const tableWrap = document.getElementById('tableWrap');
-    const searchInput = document.getElementById('search');
-    const modal = document.getElementById('modal');
-    const modalAtleta = document.getElementById('modalAtleta');
-    const modalTitle = document.getElementById('modalTitle');
-    const sizeWrap = document.getElementById('sizeSelectWrap');
-    const sizeSelect = document.getElementById('sizeSelect');
-    const emailInput = document.getElementById('emailInput');
-    const toast = document.getElementById('toast');
-    let athletes = [];
-    let hiddenSet = new Set(JSON.parse(localStorage.getItem('confirmedHidden')||'[]'));
-    let current = null;
+    const CSV_FILE='ConfirmaSelecaoPta.csv';
+    const teamSelect=document.getElementById('teamSelect');
+    const tableWrap=document.getElementById('tableWrap');
+    const searchInput=document.getElementById('search');
+    const modal=document.getElementById('modal');
+    const modalAtleta=document.getElementById('modalAtleta');
+    const modalTitle=document.getElementById('modalTitle');
+    const sizeWrap=document.getElementById('sizeSelectWrap');
+    const sizeSelect=document.getElementById('sizeSelect');
+    const emailInput=document.getElementById('emailInput');
+    const toast=document.getElementById('toast');
+    let athletes=[];let hiddenSet=new Set(JSON.parse(localStorage.getItem('confirmedHidden')||'[]'));let current=null;
 
     async function loadCsv(){
-      const res = await fetch(CSV_FILE);
-      const text = await res.text();
-      const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
-      athletes = parsed.data.map(r=>{
-        const keys = Object.keys(r);
-        const nameKey = keys.find(k=>k.toLowerCase().includes('nome'))||keys[0];
-        const teamKey = keys.find(k=>k.toLowerCase().includes('equipe'))||keys[1];
-        return { Nome:(r[nameKey]||'').trim(), Equipe:(r[teamKey]||'').trim() };
+      const res=await fetch(CSV_FILE);const text=await res.text();
+      const parsed=Papa.parse(text,{header:true,skipEmptyLines:true});
+      athletes=parsed.data.map(r=>{
+        const keys=Object.keys(r);
+        const nameKey=keys.find(k=>k.toLowerCase().includes('nome'))||keys[0];
+        const teamKey=keys.find(k=>k.toLowerCase().includes('equipe'))||keys[1];
+        const catKey=keys.find(k=>k.toLowerCase().includes('categoria')||k.toLowerCase().includes('classe')||k.toLowerCase().includes('cat'))||'';
+        return {Nome:(r[nameKey]||'').trim(),Equipe:(r[teamKey]||'').trim(),Categoria:(r[catKey]||'').trim()};
       }).filter(a=>a.Nome);
-      buildTeamOptions();
+      buildTeams();
     }
 
-    function buildTeamOptions(){
-      const teams = Array.from(new Set(athletes.map(a=>a.Equipe).filter(Boolean))).sort();
-      teamSelect.innerHTML = '<option value="">-- Selecione uma equipe --</option>';
-      teams.forEach(t=>{
-        const opt=document.createElement('option');opt.value=t;opt.textContent=t;teamSelect.appendChild(opt);
-      });
+    function buildTeams(){
+      const teams=[...new Set(athletes.map(a=>a.Equipe).filter(Boolean))].sort();
+      teamSelect.innerHTML='<option value="">-- Selecione uma equipe --</option>';
+      teams.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;teamSelect.appendChild(o);});
     }
 
     function renderTable(){
-      const team=teamSelect.value;
-      if(!team){tableWrap.innerHTML='<div class="empty">Selecione uma equipe para ver os atletas convocados.</div>';return;}
+      const team=teamSelect.value;if(!team){tableWrap.innerHTML='<div class="empty">Selecione uma equipe para ver os atletas convocados.</div>';return;}
       const q=searchInput.value.trim().toLowerCase();
       const filtered=athletes.filter(a=>{
         if(a.Equipe!==team)return false;
-        if(q && !a.Nome.toLowerCase().includes(q))return false;
+        if(q&&!a.Nome.toLowerCase().includes(q))return false;
         if(hiddenSet.has(a.Nome+'||'+a.Equipe))return false;
         return true;
       });
       if(filtered.length===0){tableWrap.innerHTML='<div class="empty">Nenhum atleta disponível nesta equipe.</div>';return;}
-      let html='<table><thead><tr><th>Nome</th><th>Equipe</th><th style="width:220px">Ação</th></tr></thead><tbody>';
+      let html='<table><thead><tr><th>Nome</th><th>Equipe</th><th>Categoria</th><th>Ação</th></tr></thead><tbody>';
       filtered.forEach(a=>{
         html+=`<tr data-name="${a.Nome}" data-team="${a.Equipe}">
-        <td>${a.Nome}</td><td>${a.Equipe}</td>
-        <td class="actions"><button class="btn-confirm action-confirm">Confirmar</button>
-        <button class="btn-no action-no">Não participar</button></td></tr>`;
+          <td>${a.Nome}</td><td>${a.Equipe}</td><td>${a.Categoria||'-'}</td>
+          <td class="actions">
+            <button class="btn-confirm action-confirm">Confirmar</button>
+            <button class="btn-no action-no">Não participar</button>
+          </td></tr>`;
       });
       html+='</tbody></table>';tableWrap.innerHTML=html;
-      document.querySelectorAll('.action-confirm').forEach(btn=>btn.addEventListener('click',()=>openModal(btn.closest('tr'),true)));
-      document.querySelectorAll('.action-no').forEach(btn=>btn.addEventListener('click',()=>openModal(btn.closest('tr'),false)));
+      document.querySelectorAll('.action-confirm').forEach(b=>b.addEventListener('click',()=>openModal(b.closest('tr'),true)));
+      document.querySelectorAll('.action-no').forEach(b=>b.addEventListener('click',()=>openModal(b.closest('tr'),false)));
     }
 
     function openModal(tr,isYes){
@@ -286,9 +187,7 @@
       document.getElementById('gfForm').submit();
       hiddenSet.add(current.name+'||'+current.team);
       localStorage.setItem('confirmedHidden',JSON.stringify([...hiddenSet]));
-      modal.style.display='none';
-      showToast('Confirmação enviada!');
-      renderTable();
+      modal.style.display='none';showToast('Confirmação enviada!');renderTable();
     });
 
     function showToast(msg){toast.textContent=msg;toast.style.display='block';setTimeout(()=>toast.style.display='none',3000);}
