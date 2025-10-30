@@ -16,7 +16,6 @@
     body {
       font-family: "Segoe UI", Roboto, Arial, sans-serif;
       margin: 0;
-      padding: 0;
       background: var(--gray-bg);
       color: var(--black);
     }
@@ -28,18 +27,9 @@
       align-items:center;
       gap:12px;
     }
-    .logo {
-      width:64px;
-      height:64px;
-      flex: 0 0 64px;
-    }
+    .logo { width:64px; height:64px; flex: 0 0 64px; }
     .title-wrap { flex:1; text-align:left; }
-    h1 {
-      margin:0;
-      font-size:20px;
-      font-weight:700;
-      letter-spacing:0.2px;
-    }
+    h1 { margin:0; font-size:20px; font-weight:700; }
     .subtitle { font-size:13px; opacity:0.95; margin-top:4px; color: #fff; }
 
     .container { max-width:980px; margin:20px auto; padding:0 12px; }
@@ -81,13 +71,14 @@
 
     table { width:100%; border-collapse:collapse; margin-top:10px; }
     th, td { padding:10px 12px; border-bottom:1px solid #f0f0f0; text-align:left; vertical-align:middle; }
-    th { background:#111; color:#fff; font-weight:700; font-size:13px; text-align:left; }
+    th { background:#111; color:#fff; font-weight:700; font-size:13px; }
     tr:nth-child(even) td { background:#fbfbfb; }
     .actions { display:flex; gap:8px; justify-content:flex-end; }
     button { padding:7px 10px; border-radius:6px; border:1px solid transparent; cursor:pointer; font-weight:600; font-size:14px; }
     .btn-confirm { background:var(--red); color:#fff; border-color:var(--red); }
     .btn-no { background:#fff; color:var(--red); border:1px solid var(--red); }
-    .btn-small { padding:6px 8px; font-size:13px; }
+    .btn-confirm:hover{background:#b00;}
+    .btn-no:hover{background:#f8f8f8;}
 
     .empty { padding:20px; text-align:center; color:var(--muted); }
 
@@ -150,7 +141,7 @@
     </section>
 
     <section class="card">
-      <div class="controls" style="margin-bottom:12px;">
+      <div class="controls">
         <div>
           <label class="inline" for="teamSelect">Equipe:</label>
           <select id="teamSelect"><option value="">-- Selecione uma equipe --</option></select>
@@ -160,13 +151,9 @@
           <label class="inline" for="search">Pesquisar atleta:</label>
           <input id="search" type="search" placeholder="Nome do atleta..." />
         </div>
-
-        <div style="margin-left:auto; display:flex; align-items:center; gap:8px;">
-          <button id="reset-hidden" class="btn-small" style="background:transparent;border:1px solid #ddd;color:var(--muted);">Restaurar lista</button>
-        </div>
       </div>
 
-      <div id="tableWrap"></div>
+      <div id="tableWrap" class="empty">Selecione uma equipe para ver os atletas convocados.</div>
     </section>
 
     <footer>
@@ -196,7 +183,7 @@
         <input id="emailInput" type="email" placeholder="seuemail@exemplo.com" />
 
         <div class="actions">
-          <button id="cancelModal" class="btn-small" style="background:#f3f3f3;border:1px solid #ddd;">Cancelar</button>
+          <button id="cancelModal" style="background:#f3f3f3;border:1px solid #ddd;">Cancelar</button>
           <button id="submitModal" class="btn-confirm">Enviar</button>
         </div>
       </div>
@@ -205,7 +192,7 @@
 
   <div class="toast" id="toast">Confirmação enviada!</div>
 
-  <!-- Hidden Google Form (envio via iframe) -->
+  <!-- Hidden Google Form -->
   <iframe name="hidden_iframe" style="display:none"></iframe>
   <form id="gfForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdkwQH9Fh6KeFF86jnUZgJcmvxuAuzbUAEe5sDu3tMqu8LioQ/formResponse" method="POST" target="hidden_iframe" style="display:none">
     <input name="entry.1522913150" id="gf_name" />
@@ -228,28 +215,21 @@
     const sizeSelect = document.getElementById('sizeSelect');
     const emailInput = document.getElementById('emailInput');
     const toast = document.getElementById('toast');
-
     let athletes = [];
     let hiddenSet = new Set(JSON.parse(localStorage.getItem('confirmedHidden')||'[]'));
     let current = null;
 
     async function loadCsv(){
-      try {
-        const res = await fetch(CSV_FILE);
-        if(!res.ok) throw new Error('CSV não encontrado');
-        const text = await res.text();
-        const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
-        athletes = parsed.data.map(r => {
-          const keys = Object.keys(r);
-          const nameKey = keys.find(k=>k.toLowerCase().includes('nome')) || keys[0];
-          const teamKey = keys.find(k=>k.toLowerCase().includes('equipe')) || keys[1];
-          return { Nome:(r[nameKey]||'').trim(), Equipe:(r[teamKey]||'').trim() };
-        }).filter(a=>a.Nome);
-        buildTeamOptions();
-        renderTable();
-      } catch (err) {
-        tableWrap.innerHTML = '<div class="empty">Não foi possível carregar o arquivo <b>ConfirmaSelecaoPta.csv</b>.</div>';
-      }
+      const res = await fetch(CSV_FILE);
+      const text = await res.text();
+      const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
+      athletes = parsed.data.map(r=>{
+        const keys = Object.keys(r);
+        const nameKey = keys.find(k=>k.toLowerCase().includes('nome'))||keys[0];
+        const teamKey = keys.find(k=>k.toLowerCase().includes('equipe'))||keys[1];
+        return { Nome:(r[nameKey]||'').trim(), Equipe:(r[teamKey]||'').trim() };
+      }).filter(a=>a.Nome);
+      buildTeamOptions();
     }
 
     function buildTeamOptions(){
@@ -261,19 +241,22 @@
     }
 
     function renderTable(){
-      const team=teamSelect.value; const q=searchInput.value.trim().toLowerCase();
+      const team=teamSelect.value;
+      if(!team){tableWrap.innerHTML='<div class="empty">Selecione uma equipe para ver os atletas convocados.</div>';return;}
+      const q=searchInput.value.trim().toLowerCase();
       const filtered=athletes.filter(a=>{
-        if(team && a.Equipe!==team)return false;
+        if(a.Equipe!==team)return false;
         if(q && !a.Nome.toLowerCase().includes(q))return false;
         if(hiddenSet.has(a.Nome+'||'+a.Equipe))return false;
         return true;
       });
-      if(filtered.length===0){tableWrap.innerHTML='<div class="empty">Nenhum atleta disponível.</div>';return;}
+      if(filtered.length===0){tableWrap.innerHTML='<div class="empty">Nenhum atleta disponível nesta equipe.</div>';return;}
       let html='<table><thead><tr><th>Nome</th><th>Equipe</th><th style="width:220px">Ação</th></tr></thead><tbody>';
       filtered.forEach(a=>{
         html+=`<tr data-name="${a.Nome}" data-team="${a.Equipe}">
-          <td>${a.Nome}</td><td>${a.Equipe}</td>
-          <td class="actions"><button class="btn-confirm action-confirm">Confirmar</button><button class="btn-no action-no">Não participar</button></td></tr>`;
+        <td>${a.Nome}</td><td>${a.Equipe}</td>
+        <td class="actions"><button class="btn-confirm action-confirm">Confirmar</button>
+        <button class="btn-no action-no">Não participar</button></td></tr>`;
       });
       html+='</tbody></table>';tableWrap.innerHTML=html;
       document.querySelectorAll('.action-confirm').forEach(btn=>btn.addEventListener('click',()=>openModal(btn.closest('tr'),true)));
@@ -286,7 +269,7 @@
       modalAtleta.textContent=`${name} — ${team}`;
       modalTitle.textContent=isYes?'Confirmar presença':'Marcar como NÃO participante';
       sizeWrap.style.display=isYes?'block':'none';
-      sizeSelect.value=''; emailInput.value='';
+      sizeSelect.value='';emailInput.value='';
       modal.style.display='flex';
     }
 
@@ -303,13 +286,14 @@
       document.getElementById('gfForm').submit();
       hiddenSet.add(current.name+'||'+current.team);
       localStorage.setItem('confirmedHidden',JSON.stringify([...hiddenSet]));
-      modal.style.display='none';showToast('Confirmação enviada!');renderTable();
+      modal.style.display='none';
+      showToast('Confirmação enviada!');
+      renderTable();
     });
 
     function showToast(msg){toast.textContent=msg;toast.style.display='block';setTimeout(()=>toast.style.display='none',3000);}
     teamSelect.addEventListener('change',renderTable);
     searchInput.addEventListener('input',renderTable);
-    document.getElementById('reset-hidden').addEventListener('click',()=>{if(confirm('Apagar confirmações locais?')){hiddenSet=new Set();localStorage.removeItem('confirmedHidden');renderTable();}});
     loadCsv();
   </script>
 </body>
