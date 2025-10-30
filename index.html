@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Confirmação de participação - Seleção Paulista FTMSP 2025</title>
   <style>
-    :root{
-      --red:#900;--black:#111;--gray-bg:#f4f4f4;--card:#fff;--muted:#666;
-    }
+    :root{--red:#900;--black:#111;--gray-bg:#f4f4f4;--card:#fff;--muted:#666;}
+    *{box-sizing:border-box}
     body{font-family:"Segoe UI",Roboto,Arial,sans-serif;margin:0;background:var(--gray-bg);color:var(--black);}
     .topbar{background:linear-gradient(90deg,#111 0%,var(--red) 100%);color:#fff;padding:18px 16px;display:flex;align-items:center;gap:12px;}
     .logo{width:64px;height:64px;flex:0 0 64px;}
@@ -17,6 +16,7 @@
     .container{max-width:980px;margin:20px auto;padding:0 12px;}
     .orientacoes{background:var(--card);margin-bottom:14px;padding:16px;border-left:6px solid var(--red);border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,0.06);line-height:1.5;font-size:15px;}
     .card{background:var(--card);border-radius:8px;padding:12px;box-shadow:0 2px 10px rgba(0,0,0,0.06);}
+    .controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px;}
     select,input[type=search]{padding:8px;border-radius:6px;border:1px solid #dcdcdc;font-size:14px;}
     table{width:100%;border-collapse:collapse;margin-top:10px;}
     th,td{padding:10px 12px;border-bottom:1px solid #f0f0f0;text-align:left;}
@@ -36,6 +36,9 @@
     .modal input[type=email],.modal select{width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;font-size:14px;}
     .modal .actions{margin-top:14px;display:flex;gap:8px;justify-content:flex-end;}
     .toast{position:fixed;right:18px;bottom:18px;background:#222;color:#fff;padding:10px 14px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.25);display:none;z-index:2000;}
+    .toast.info{background:#222;}
+    .toast.warn{background:#b00;}
+    @media (max-width:560px){.logo{display:none}.title-wrap{text-align:center}h1{font-size:18px}}
   </style>
 </head>
 <body>
@@ -50,15 +53,20 @@
   <main class="container">
     <section class="orientacoes">
       <p><strong>A FEDERAÇÃO DE TÊNIS DE MESA DO ESTADO DE SÃO PAULO (FTMSP)</strong> convoca os atletas abaixo para compor a <strong>Seleção Estadual</strong> no <strong>Brasileirão de Verão Interclubes Olímpico e Paralímpico – 2025</strong>, a ser disputado em dezembro na cidade de <strong>Blumenau - SC</strong>.</p>
-      <p>Os dirigentes responsáveis pelos atletas deverão confirmar, no link abaixo, se o atleta participará ou não do Brasileirão e informar o <strong>tamanho da camiseta</strong> a ser utilizada. Ao enviar, a resposta será registrada automaticamente no sistema.</p>
+      <p>Os dirigentes deverão indicar se o atleta participará ou não do Brasileirão. Quando o atleta confirmar participação, será solicitado o tamanho da camiseta e o e-mail (apenas para registro no formulário).</p>
     </section>
 
     <section class="card">
       <div class="controls">
-        <label>Equipe:</label>
-        <select id="teamSelect"><option value="">-- Selecione uma equipe --</option></select>
-        <label>Pesquisar atleta:</label>
-        <input id="search" type="search" placeholder="Nome do atleta..." />
+        <div>
+          <label class="inline" for="teamSelect">Equipe:</label>
+          <select id="teamSelect"><option value="">-- Selecione uma equipe --</option></select>
+        </div>
+
+        <div>
+          <label class="inline" for="search">Pesquisar atleta:</label>
+          <input id="search" type="search" placeholder="Nome do atleta..." />
+        </div>
       </div>
 
       <div id="tableWrap" class="empty">Selecione uma equipe para ver os atletas convocados.</div>
@@ -67,14 +75,16 @@
     <footer>FTMSP © 2025 — Confirmação de participação.</footer>
   </main>
 
-  <div id="modal">
+  <!-- Modal: same modal used for both actions, we toggle which fields show -->
+  <div id="modal" aria-hidden="true">
     <div class="modal-backdrop"></div>
-    <div class="modal-card">
+    <div class="modal-card" role="dialog" aria-modal="true">
       <h3 id="modalTitle">Confirmar presença</h3>
       <div id="modalBody">
         <label>Atleta</label>
         <div id="modalAtleta" style="font-weight:700;"></div>
 
+        <!-- size only when confirming "Sim" -->
         <div id="sizeSelectWrap">
           <label for="sizeSelect">Tamanho da camiseta</label>
           <select id="sizeSelect">
@@ -84,7 +94,8 @@
           </select>
         </div>
 
-        <label for="emailInput">E-mail para cópia</label>
+        <!-- email always requested (for both Sim and Não), but when Não press only this field visible -->
+        <label for="emailInput">E-mail para registro (apenas registro no formulário)</label>
         <input id="emailInput" type="email" placeholder="seuemail@exemplo.com" />
 
         <div class="actions">
@@ -95,8 +106,9 @@
     </div>
   </div>
 
-  <div class="toast" id="toast">Confirmação enviada!</div>
+  <div class="toast" id="toast">Mensagem</div>
 
+  <!-- Hidden form to submit to Google Forms -->
   <iframe name="hidden_iframe" style="display:none"></iframe>
   <form id="gfForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdkwQH9Fh6KeFF86jnUZgJcmvxuAuzbUAEe5sDu3tMqu8LioQ/formResponse" method="POST" target="hidden_iframe" style="display:none">
     <input name="entry.1522913150" id="gf_name" />
@@ -108,91 +120,146 @@
 
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <script>
-    const CSV_FILE='ConfirmaSelecaoPta.csv';
-    const teamSelect=document.getElementById('teamSelect');
-    const tableWrap=document.getElementById('tableWrap');
-    const searchInput=document.getElementById('search');
-    const modal=document.getElementById('modal');
-    const modalAtleta=document.getElementById('modalAtleta');
-    const modalTitle=document.getElementById('modalTitle');
-    const sizeWrap=document.getElementById('sizeSelectWrap');
-    const sizeSelect=document.getElementById('sizeSelect');
-    const emailInput=document.getElementById('emailInput');
-    const toast=document.getElementById('toast');
-    let athletes=[];let hiddenSet=new Set(JSON.parse(localStorage.getItem('confirmedHidden')||'[]'));let current=null;
+    const CSV_FILE = 'ConfirmaSelecaoPta.csv';
+    const teamSelect = document.getElementById('teamSelect');
+    const tableWrap = document.getElementById('tableWrap');
+    const searchInput = document.getElementById('search');
+    const modal = document.getElementById('modal');
+    const modalAtleta = document.getElementById('modalAtleta');
+    const modalTitle = document.getElementById('modalTitle');
+    const sizeWrap = document.getElementById('sizeSelectWrap');
+    const sizeSelect = document.getElementById('sizeSelect');
+    const emailInput = document.getElementById('emailInput');
+    const toast = document.getElementById('toast');
+    let athletes = [];
+    let hiddenSet = new Set(JSON.parse(localStorage.getItem('confirmedHidden') || '[]'));
+    let current = null; // {name, team, cat, resp}
 
+    // load CSV
     async function loadCsv(){
-      const res=await fetch(CSV_FILE);const text=await res.text();
-      const parsed=Papa.parse(text,{header:true,skipEmptyLines:true});
-      athletes=parsed.data.map(r=>{
-        const keys=Object.keys(r);
-        const nameKey=keys.find(k=>k.toLowerCase().includes('nome'))||keys[0];
-        const teamKey=keys.find(k=>k.toLowerCase().includes('equipe'))||keys[1];
-        const catKey=keys.find(k=>k.toLowerCase().includes('categoria')||k.toLowerCase().includes('classe')||k.toLowerCase().includes('cat'))||'';
-        return {Nome:(r[nameKey]||'').trim(),Equipe:(r[teamKey]||'').trim(),Categoria:(r[catKey]||'').trim()};
-      }).filter(a=>a.Nome);
-      buildTeams();
+      try{
+        const res = await fetch(CSV_FILE);
+        if(!res.ok) throw new Error('CSV não encontrado');
+        const text = await res.text();
+        const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
+        athletes = parsed.data.map(r => {
+          const keys = Object.keys(r);
+          const nameKey = keys.find(k => k.toLowerCase().includes('nome')) || keys[0];
+          const teamKey = keys.find(k => k.toLowerCase().includes('equipe')) || keys[1] || keys[0];
+          const catKey = keys.find(k => k.toLowerCase().includes('categoria') || k.toLowerCase().includes('classe') || k.toLowerCase().includes('cat')) || '';
+          return { Nome: (r[nameKey]||'').trim(), Equipe: (r[teamKey]||'').trim(), Categoria: (r[catKey]||'').trim() };
+        }).filter(a => a.Nome);
+        buildTeamOptions();
+      }catch(e){
+        tableWrap.innerHTML = '<div class="empty">Não foi possível carregar ConfirmaSelecaoPta.csv.</div>';
+        console.error(e);
+      }
     }
 
-    function buildTeams(){
-      const teams=[...new Set(athletes.map(a=>a.Equipe).filter(Boolean))].sort();
-      teamSelect.innerHTML='<option value="">-- Selecione uma equipe --</option>';
-      teams.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;teamSelect.appendChild(o);});
+    function buildTeamOptions(){
+      const teams = Array.from(new Set(athletes.map(a => a.Equipe).filter(Boolean))).sort();
+      teamSelect.innerHTML = '<option value="">-- Selecione uma equipe --</option>';
+      teams.forEach(t => { const o = document.createElement('option'); o.value = t; o.textContent = t; teamSelect.appendChild(o); });
     }
 
     function renderTable(){
-      const team=teamSelect.value;if(!team){tableWrap.innerHTML='<div class="empty">Selecione uma equipe para ver os atletas convocados.</div>';return;}
-      const q=searchInput.value.trim().toLowerCase();
-      const filtered=athletes.filter(a=>{
-        if(a.Equipe!==team)return false;
-        if(q&&!a.Nome.toLowerCase().includes(q))return false;
-        if(hiddenSet.has(a.Nome+'||'+a.Equipe))return false;
+      const team = teamSelect.value;
+      if(!team){ tableWrap.innerHTML = '<div class="empty">Selecione uma equipe para ver os atletas convocados.</div>'; return; }
+      const q = searchInput.value.trim().toLowerCase();
+      const filtered = athletes.filter(a=>{
+        if(a.Equipe !== team) return false;
+        if(q && !a.Nome.toLowerCase().includes(q)) return false;
+        if(hiddenSet.has(a.Nome + '||' + a.Equipe)) return false;
         return true;
       });
-      if(filtered.length===0){tableWrap.innerHTML='<div class="empty">Nenhum atleta disponível nesta equipe.</div>';return;}
-      let html='<table><thead><tr><th>Nome</th><th>Equipe</th><th>Categoria</th><th>Ação</th></tr></thead><tbody>';
+      if(filtered.length === 0){ tableWrap.innerHTML = '<div class="empty">Nenhum atleta disponível nesta equipe.</div>'; return; }
+      let html = '<table><thead><tr><th>Nome</th><th>Equipe</th><th>Categoria</th><th style="width:220px">Ação</th></tr></thead><tbody>';
       filtered.forEach(a=>{
-        html+=`<tr data-name="${a.Nome}" data-team="${a.Equipe}">
-          <td>${a.Nome}</td><td>${a.Equipe}</td><td>${a.Categoria||'-'}</td>
+        html += `<tr data-name="${escapeHtml(a.Nome)}" data-team="${escapeHtml(a.Equipe)}" data-cat="${escapeHtml(a.Categoria||'')}">
+          <td>${escapeHtml(a.Nome)}</td><td>${escapeHtml(a.Equipe)}</td><td>${escapeHtml(a.Categoria||'-')}</td>
           <td class="actions">
             <button class="btn-confirm action-confirm">Confirmar</button>
             <button class="btn-no action-no">Não participar</button>
           </td></tr>`;
       });
-      html+='</tbody></table>';tableWrap.innerHTML=html;
-      document.querySelectorAll('.action-confirm').forEach(b=>b.addEventListener('click',()=>openModal(b.closest('tr'),true)));
-      document.querySelectorAll('.action-no').forEach(b=>b.addEventListener('click',()=>openModal(b.closest('tr'),false)));
+      html += '</tbody></table>';
+      tableWrap.innerHTML = html;
+      document.querySelectorAll('.action-confirm').forEach(b => b.addEventListener('click', (e) => openModal(e.target.closest('tr'), 'Sim')));
+      document.querySelectorAll('.action-no').forEach(b => b.addEventListener('click', (e) => openModal(e.target.closest('tr'), 'Não')));
     }
 
-    function openModal(tr,isYes){
-      const name=tr.dataset.name,team=tr.dataset.team;
-      current={name,team,resp:isYes?'Sim':'Não'};
-      modalAtleta.textContent=`${name} — ${team}`;
-      modalTitle.textContent=isYes?'Confirmar presença':'Marcar como NÃO participante';
-      sizeWrap.style.display=isYes?'block':'none';
-      sizeSelect.value='';emailInput.value='';
-      modal.style.display='flex';
+    function openModal(tr, resp){
+      const name = tr.dataset.name, team = tr.dataset.team, cat = tr.dataset.cat || '';
+      current = { name, team, cat, resp }; // resp: 'Sim' or 'Não'
+      modalAtleta.textContent = `${name} — ${team}${cat ? ' — ' + cat : ''}`;
+      modalTitle.textContent = resp === 'Sim' ? 'Confirmar presença' : 'Marcar como NÃO participante';
+      // show/hide fields
+      if(resp === 'Sim'){
+        sizeWrap.style.display = 'block';
+      } else {
+        sizeWrap.style.display = 'none';
+      }
+      sizeSelect.value = '';
+      emailInput.value = '';
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden','false');
     }
 
-    document.getElementById('cancelModal').addEventListener('click',()=>modal.style.display='none');
-
-    document.getElementById('submitModal').addEventListener('click',()=>{
-      if(!current)return;
-      if(current.resp==='Sim'&&!sizeSelect.value){alert('Selecione o tamanho da camiseta.');return;}
-      document.getElementById('gf_name').value=current.name;
-      document.getElementById('gf_team').value=current.team;
-      document.getElementById('gf_participa').value=current.resp;
-      document.getElementById('gf_size').value=sizeSelect.value;
-      document.getElementById('gf_email').value=emailInput.value;
-      document.getElementById('gfForm').submit();
-      hiddenSet.add(current.name+'||'+current.team);
-      localStorage.setItem('confirmedHidden',JSON.stringify([...hiddenSet]));
-      modal.style.display='none';showToast('Confirmação enviada!');renderTable();
+    document.getElementById('cancelModal').addEventListener('click', ()=>{
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden','true');
+      current = null;
     });
 
-    function showToast(msg){toast.textContent=msg;toast.style.display='block';setTimeout(()=>toast.style.display='none',3000);}
-    teamSelect.addEventListener('change',renderTable);
-    searchInput.addEventListener('input',renderTable);
+    // On submit: always send to Google Forms (Sim or Não)
+    document.getElementById('submitModal').addEventListener('click', ()=>{
+      if(!current) return;
+      if(current.resp === 'Sim' && !sizeSelect.value){ alert('Selecione o tamanho da camiseta.'); return; }
+      if(!emailInput.value || !validateEmail(emailInput.value)){ alert('Informe um e-mail válido para registro.'); return; }
+
+      // fill hidden form and submit
+      document.getElementById('gf_name').value = current.name;
+      document.getElementById('gf_team').value = current.team;
+      document.getElementById('gf_participa').value = current.resp; // "Sim" or "Não"
+      document.getElementById('gf_size').value = current.resp === 'Sim' ? sizeSelect.value : '';
+      document.getElementById('gf_email').value = emailInput.value;
+
+      // submit to Google Forms via form submit (iframe target)
+      document.getElementById('gfForm').submit();
+
+      // mark hidden locally so athlete disappears
+      hiddenSet.add(current.name + '||' + current.team);
+      localStorage.setItem('confirmedHidden', JSON.stringify(Array.from(hiddenSet)));
+
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden','true');
+
+      // toast messages differ by response
+      if(current.resp === 'Sim'){
+        showToast('Confirmação enviada!');
+      } else {
+        showToast('Atleta marcado como não participante.');
+      }
+
+      current = null;
+      renderTable();
+    });
+
+    function validateEmail(e){ return /\S+@\S+\.\S+/.test(e); }
+
+    function showToast(msg, seconds=3000){
+      toast.textContent = msg;
+      toast.className = 'toast info';
+      toast.style.display = 'block';
+      setTimeout(()=> { toast.style.display = 'none'; }, seconds);
+    }
+
+    function escapeHtml(s){ return (s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+
+    teamSelect.addEventListener('change', renderTable);
+    searchInput.addEventListener('input', renderTable);
+
+    // initialize
     loadCsv();
   </script>
 </body>
